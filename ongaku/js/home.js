@@ -6,8 +6,10 @@ window.onload = function () {
     fetchMusic();
     fetchMyPlayList();
     onAudioEnd();
+    onAudioPlayPause();
     prevBtnListener();
     nextBtnListener();
+    playPauseListener();
     modeToggleListener();
     logoutButtonListener();
 }
@@ -15,6 +17,9 @@ function redirectToLogin() {
     const user = JSON.parse(sessionStorage.getItem('user'));
     if (!user || !user.loggedIn) {
         window.location.replace('/login.html');
+    }
+    else{
+        document.getElementById('username').innerText = "Welcome "+user.username;
     }
 }
 
@@ -185,7 +190,7 @@ function renderSongs(data) {
         <th scope="row">${element.id}</th>
         <td>${element.title}</td>
         <td>${element.releaseDate}</td>
-        <td class="addToPlaylist"><i class="bi bi-plus-circle"></i></td>
+        <td class="addToPlaylist"><i title="Add to Playlist" class="bi bi-plus-circle"></i></td>
         </tr>`;
     }
     document.getElementById('musicBody').innerHTML = html;
@@ -201,9 +206,9 @@ function renderPlaylist(data) {
         <td>${element.title}</td>
         <td>${element.releaseDate}</td>
         <td><span class='removeFromPlaylist' id="song${element.id}">
-        <i class="bi bi-dash-circle"></i></span> 
+        <i title="Remove from Playlist" class="bi bi-dash-circle"></i></span> 
         <span class='playBtn' id="song${element.id}">
-        <i class="bi bi-play-circle"></i></span>
+        <i title="Play" class="bi bi-play-circle"></i></span>
         </td>
         </tr>`;
     }
@@ -255,6 +260,20 @@ function onAudioEnd() {
     };
 }
 
+function onAudioPlayPause() {
+    let aud = document.getElementById("audioPlayer");
+    aud.onplay = function () {
+        const playBtn = document.getElementById('play-pause');
+        playBtn.className = "bi bi-pause-circle";
+    };
+    aud.onpause = function () {
+        const playBtn = document.getElementById('play-pause');
+        playBtn.className = "bi bi-play-circle";
+    };
+}
+
+
+
 function playNext(direction) {
     if (direction == undefined) {
         direction = 1;
@@ -289,6 +308,7 @@ function loadSongForPlay(title) {
     let audioElement = sourceElement.parentElement;
     audioElement.load();
     audioElement.play();
+    document.getElementById('musicTitle').innerText=title;
 }
 
 
@@ -305,18 +325,34 @@ function nextBtnListener() {
         playNext();
     });
 }
+function playPauseListener() {
+    const playPauseBtn = document.getElementById('play-pause');
+    playPauseBtn.addEventListener('click', () => {
+        let aud = document.getElementById("audioPlayer");
+        if (aud.paused) {
+            aud.play();
+        }
+        else {
+            aud.pause();
+        }
+    });
+
+}
 
 function modeToggleListener() {
     const modeBtn = document.getElementById('modeBtn');
     modeBtn.addEventListener('click', () => {
         playMode = (playMode + 1) % 3;
         if (playMode == 0) {
+            modeBtn.title = "Repeat Current";
             modeBtn.className = "bi bi-repeat-1";
         }
         if (playMode == 1) {
+            modeBtn.title = "Repeat Playlist";
             modeBtn.className = "bi bi-arrow-repeat";
         }
         if (playMode == 2) {
+            modeBtn.title = "Shuffle";
             modeBtn.className = "bi bi-shuffle";
         }
     });

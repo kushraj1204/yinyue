@@ -5,67 +5,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yinyue</title>
-    <link href="./css/bootstrap.min.css" rel="stylesheet" >
-    <link href="./css/bootstrap-icons.css" rel="stylesheet" >
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap-icons.css" rel="stylesheet">
     <link href="./css/home.css" rel="stylesheet">
     <link rel="icon" href="./favicon.ico">
-    </head>
+</head>
 </head>
 
 <body>
     <header>
         <div class="navbar navbar-dark bg-dark box-shadow">
             <div class="container d-flex justify-content-between">
-                <button class="btn btn-danger ml-auto" type="button" id="logoutButton">
+                <div>
+                    <span><img src="./yinyue.png" height="30"></span>
+                <span id="username">Welcome User</span>
+                </div>
+                <button class="btn btn-danger ml-right" type="button" id="logoutButton">
                     Logout
                 </button>
             </div>
         </div>
     </header>
-    <h2>All Music</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Title</th>
-                <th scope="col">Release Date</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody id="musicBody">
-        </tbody>
-    </table>
 
-    <h2>My Playlist</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Title</th>
-                <th scope="col">Release Date</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody id="playlistBody">
-        </tbody>
-    </table>
-
-
-    <div id="audioPlayerContainer">
-        <audio controls id="audioPlayer">
+    <div id="audioPlayerContainer" class="container shadow">
+        <audio controls id="audioPlayer" class="form-control">
             <source id="playingMusic" src="" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
         <div class="controls">
 
-            <i id="prevBtn" class="bi bi-caret-left-fill"></i>
-            <i id="nextBtn" class="bi bi-caret-right-fill"></i>
-
-
-            <i class="bi bi-repeat-1" id="modeBtn" ></i>
-            
+            <div class="d-flex justify-content-between">
+                <i class="bi bi-repeat-1" id="modeBtn"></i>
+                <span id="musicTitle">Music Title</span>
+            </div>
+            <div>
+                <i title="Previous" id="prevBtn" class="bi bi-caret-left-fill"></i>
+                <i title="Play/Pause" id="play-pause" class="bi bi-play-circle"></i>
+                <i title="Next" id="nextBtn" class="bi bi-caret-right-fill"></i>
+            </div>
         </div>
+
     </div>
+    <div id="myPlaylistContainer" class="container">
+        <h2>My Playlist</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Release Date</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="playlistBody">
+            </tbody>
+        </table>
+    </div>
+    <div id="allMusicContainer" class="container">
+        <h2>All Music</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Release Date</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="musicBody">
+            </tbody>
+        </table>
+    </div>
+    <footer class="container text-center">
+            © 2024 Yinyue Music. All Rights Reserved.
+
+    </footer>
+
+
 
     <script src="./js/constants.js"></script>
     <script src="./js/bootstrap.bundle.min.js"
@@ -73,6 +89,7 @@
         crossorigin="anonymous"></script>
 
     <script src="./js/home.js"></script>
+
 </body>
 
 </html>

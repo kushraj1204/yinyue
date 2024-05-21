@@ -1,0 +1,68 @@
+#audioPlayerContainer {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: rgba(248, 249, 250, 0.8);
+    /* Semi-transparent background */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+#audioPlayer {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.controls {
+    text-align: center;
+}
+
+.controls i {
+    font-size: 24px;
+    margin: 0 15px;
+    cursor: pointer;
+}
+
+.controls i:hover {
+    color: #007bff;
+}
+
+.addToPlaylist i {
+    font-size: 24px;
+    margin: 0 15px;
+    cursor: pointer;
+}
+
+.removeFromPlaylist i {
+    font-size: 24px;
+    margin: 0 15px;
+    cursor: pointer;
+}
+
+.playBtn i {
+    font-size: 25px;
+    margin: 0 15px;
+    cursor: pointer;
+}
+
+.playBtn i:hover {
+    color: #045c21;
+}
+
+#play-pause {
+    font-size: 30px;
+    margin: 0 15px;
+    cursor: pointer;
+}
+
+footer{
+
+    margin-top:100px;
+    margin-bottom:10px
+}
+#username{
+    color: #ddd;
+}

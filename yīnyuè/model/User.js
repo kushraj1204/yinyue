@@ -1,5 +1,7 @@
 let users = [{ "id": "1", "username": "kush", "password": "1234", "email": "kushraj1204@gmail.com" },
-{ "id": "2", "username": "tina", "password": "abcd", "email": "tinaxing@miu.edu" }
+{ "id": "2", "username": "tina", "password": "1234", "email": "tinaxing@miu.edu" },
+{ "id": "3", "username": "abdun", "password": "1234", "email": "abdun@gmail.com" },
+{ "id": "4", "username": "binod", "password": "1234", "email": "binod@gmail.com" }
 ]
 module.exports = class User {
     constructor(id, username, email, password) {
