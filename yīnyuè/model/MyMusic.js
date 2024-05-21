@@ -1,4 +1,5 @@
-let musicList = [{ "userId": 1, "musicId": [1, 2], "playMode": 2 }, { "userId": 2, "musicId": [3], "playMode": 2 }];
+let musicList = [{ "userId": 1, "musicId": [1, 2], "playMode": 2 },
+ { "userId": 2, "musicId": [3], "playMode": 2 }];
 // playMode 1->Shuffle 2->Repeat 1 song 3->PLay same song on repeat
 
 module.exports = class MyMusic {

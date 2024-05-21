@@ -6,6 +6,15 @@ content-type: application/json
   "password":"1234"
 }
 
+###
+GET http://localhost:3303/api/cover-art
+content-type: application/json
+
+{
+  "username":"kush",
+  "password":"1234"
+}
+
 ### 
 
 GET http://localhost:3301/music
