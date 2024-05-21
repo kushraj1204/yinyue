@@ -1,0 +1,40 @@
+POST http://localhost:3301/auth/login
+content-type: application/json
+
+{
+  "username":"kush",
+  "password":"1234"
+}
+
+### 
+
+GET http://localhost:3301/music
+access-token: sampleAccessToken
+
+###
+
+GET http://localhost:3301/music/playlist
+access-token: sampleAccessToken
+
+###
+
+POST http://localhost:3301/music/playlist/add
+content-type: application/json
+access-token: sampleAccessToken
+
+{
+  "musicId":3
+}
+
+###
+
+POST http://localhost:3301/music/playlist/remove
+content-type: application/json
+access-token: sampleAccessToken
+
+{
+  "musicId":3
+}
+
+###
+

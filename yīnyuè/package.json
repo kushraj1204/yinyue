@@ -1,0 +1,22 @@
+{
+  "name": "yinyue",
+  "version": "1.0.0",
+  "description": "Your favorite music player. Well probably not, but let me assume it is :P",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "PORT=3302 nodemon index.js"
+  },
+  "keywords": [
+    "music",
+    "yinyue",
+    "musik",
+    "sangeet"
+  ],
+  "author": "Kush",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}

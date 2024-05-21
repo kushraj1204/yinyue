@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yinyue</title>
+    <link href="./css/bootstrap.min.css" rel="stylesheet" >
+    <link href="./css/home.css" rel="stylesheet">
+    <link rel="icon" href="./favicon.ico">
+</head>
+
+<body>
+    <header>
+        <div class="navbar navbar-dark bg-dark box-shadow">
+            <div class="container d-flex justify-content-between">
+                <button class="btn btn-danger ml-auto" type="button">
+                    Logout
+                </button>
+            </div>
+        </div>
+    </header>
+    All Music
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Release Date</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="musicBody">
+        </tbody>
+    </table>
+
+    My Playlist
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Release Date</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="playlistBody">
+        </tbody>
+    </table>
+
+
+    <div id="audioPlayerContainer">
+        <audio controls id="audioPlayer">
+            <source id="playingMusic" src="" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <div class="controls">
+            <button id="prevBtn">Previous</button>
+            <button id="modeBtn" >Normal</button>
+            <button id="nextBtn">Next</button>
+        </div>
+    </div>
+
+    <script src="./js/constants.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <script src="./js/home.js"></script>
+</body>
+
+</html>
