@@ -6,21 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yinyue</title>
     <link href="./css/bootstrap.min.css" rel="stylesheet" >
+    <link href="./css/bootstrap-icons.css" rel="stylesheet" >
     <link href="./css/home.css" rel="stylesheet">
     <link rel="icon" href="./favicon.ico">
+    </head>
 </head>
 
 <body>
     <header>
         <div class="navbar navbar-dark bg-dark box-shadow">
             <div class="container d-flex justify-content-between">
-                <button class="btn btn-danger ml-auto" type="button">
+                <button class="btn btn-danger ml-auto" type="button" id="logoutButton">
                     Logout
                 </button>
             </div>
         </div>
     </header>
-    All Music
+    <h2>All Music</h2>
     <table class="table">
         <thead>
             <tr>
@@ -34,7 +36,7 @@
         </tbody>
     </table>
 
-    My Playlist
+    <h2>My Playlist</h2>
     <table class="table">
         <thead>
             <tr>
@@ -55,9 +57,13 @@
             Your browser does not support the audio element.
         </audio>
         <div class="controls">
-            <button id="prevBtn">Previous</button>
-            <button id="modeBtn" >Normal</button>
-            <button id="nextBtn">Next</button>
+
+            <i id="prevBtn" class="bi bi-caret-left-fill"></i>
+            <i id="nextBtn" class="bi bi-caret-right-fill"></i>
+
+
+            <i class="bi bi-repeat-1" id="modeBtn" ></i>
+            
         </div>
     </div>
 

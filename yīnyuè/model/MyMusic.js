@@ -16,25 +16,27 @@ module.exports = class MyMusic {
     }
 
     static hasMusicForUser = (musicId, userId) => {
-        console.log(musicId,userId);
-        console.log((musicList.find(x => x.userId == userId && x.musicId.indexOf(musicId) != -1)) !=null)
+        musicId=parseInt(musicId);
+        userId=parseInt(userId);
+        console.log(musicId);
+        console.log(userId);
+        console.log(musicList)
         return (musicList.find(x => x.userId == userId && x.musicId.indexOf(musicId) != -1) != null);
     }
 
     static addToMyMusic = (musicId, userId) => {
         const userIndex = musicList.findIndex(item => item.userId == userId);
         if (userIndex !== -1) {
-            musicList[userIndex].musicId.push(musicId);
-            console.log(musicList);
+            musicList[userIndex].musicId.push(parseInt(musicId));
         } else {
-            musicList.push({ userId, musicId: [musicId], playMode: 1 });
+            musicList.push({ userId, musicId: [parseInt(musicId)], playMode: 1 });
         }
     }
 
     static removeFromMyMusic = (musicId, userId) => {
         const userIndex = musicList.findIndex(item => item.userId == userId);
         if (userIndex !== -1) {
-            musicList[userIndex].musicId = musicList[userIndex].musicId.filter(id => id !== musicId);
+            musicList[userIndex].musicId = musicList[userIndex].musicId.filter(id => id != musicId);
         }
     }
 

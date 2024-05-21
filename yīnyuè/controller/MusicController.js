@@ -38,8 +38,7 @@ module.exports.addToMyMusic = (req, res, next) => {
     const accessToken = req.headers['access-token'];
     const token = loginResponse.findToken(accessToken);
     let loginUser = user.findByUsername(token.username);
-    const reqBody = req.body;
-    const musicId = reqBody.musicId;
+    const musicId = req.params.id;
 
     if (myMusic.hasMusicForUser(musicId, loginUser.id)) {
         res.status(409).json(new responseBody(null, "Music Already in the playlist"));
@@ -54,9 +53,9 @@ module.exports.removeFromMyMusic = (req, res, next) => {
     const accessToken = req.headers['access-token'];
     const token = loginResponse.findToken(accessToken);
     let loginUser = user.findByUsername(token.username);
-    const reqBody = req.body;
-    const musicId = reqBody.musicId;
-
+    const musicId = req.params.id;
+    console.log(musicId)
+    console.log(myMusic.hasMusicForUser(musicId, loginUser.id))
     if (!myMusic.hasMusicForUser(musicId, loginUser.id)) {
         res.status(409).json(new responseBody(null, "Music not in the playlist"));
     }

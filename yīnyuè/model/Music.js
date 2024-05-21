@@ -1,6 +1,6 @@
-let musicList = [{ "title": "Hero-One-Punch-Man.mp3", "id": 1 }, { "title": "goforbaroque.mp3", "id": 2 }, { "title": "Twilight of the Gods.mp3", "id": 3 }];
+let musicList = [{ "title": "Hero-One-Punch-Man.mp3", "id": 1,releaseDate:"2020/01/01" }, { "title": "goforbaroque.mp3", "id": 2,releaseDate:"2020/01/01" }, { "title": "Twilight of the Gods.mp3", "id": 3,releaseDate:"2020/01/01" }];
 
-module.exports = class User {
+module.exports = class Music {
     constructor(id, title, artists, genre, releaseDate) {
         this.id = id;
         this.title = title;

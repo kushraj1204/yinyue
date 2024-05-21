@@ -1,4 +1,4 @@
-var playMode = 1;
+var playMode = 0;
 var myPlaylist = [];
 var currentSongIndex = 0;
 window.onload = function () {
@@ -9,6 +9,7 @@ window.onload = function () {
     prevBtnListener();
     nextBtnListener();
     modeToggleListener();
+    logoutButtonListener();
 }
 function redirectToLogin() {
     const user = JSON.parse(sessionStorage.getItem('user'));
@@ -85,7 +86,7 @@ async function fetchMyPlayList() {
 
 }
 
-async function addToPlayList() {
+async function addToPlayList(id) {
     const user = JSON.parse(sessionStorage.getItem('user'));
     if (!user || !user.accessToken) {
         alert('User is not authenticated');
@@ -93,8 +94,8 @@ async function addToPlayList() {
     }
     (async () => {
         try {
-            const response = await fetch(serverUrl + "/music/playlist/add", {
-                method: 'POST',
+            const response = await fetch(serverUrl + "/music/" + id + "/playlist/add", {
+                method: 'PUT',
                 headers: {
                     'Content-type': 'application/json',
                     'Access-Token': user.accessToken
@@ -106,7 +107,40 @@ async function addToPlayList() {
                     throw data;
                 }
             if (data.status) {
-                renderSongs(data.data);
+                fetchMyPlayList();
+            } else {
+                alert(data.message);
+            }
+        } catch (err) {
+            alert(err.message);
+        }
+    })();
+
+}
+
+
+async function removeFromPlaylist(id) {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    if (!user || !user.accessToken) {
+        alert('User is not authenticated');
+        window.location.replace('/login.html');
+    }
+    (async () => {
+        try {
+            const response = await fetch(serverUrl + "/music/" + id + "/playlist/remove", {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Access-Token': user.accessToken
+                }
+            });
+            const data = await response.json();
+            if (data.status)
+                if (!response.ok) {
+                    throw data;
+                }
+            if (data.status) {
+                fetchMyPlayList();
             } else {
                 alert(data.message);
             }
@@ -119,19 +153,22 @@ async function addToPlayList() {
 
 
 
+
+
 function renderSongs(data) {
     console.log("Inside render songs", data);
     html = "";
     for (let index = 0; index < data.length; index++) {
         const element = data[index];
-        html += `<tr>
+        html += `<tr data-index="${element.id}">
         <th scope="row">${element.id}</th>
         <td>${element.title}</td>
-        <td>${element.id}</td>
-        <td>+</td>
+        <td>${element.releaseDate}</td>
+        <td class="addToPlaylist"><i class="bi bi-plus-circle"></i></td>
         </tr>`;
     }
     document.getElementById('musicBody').innerHTML = html;
+    addToPlaylistListeners();
 }
 
 function renderPlaylist(data) {
@@ -139,16 +176,17 @@ function renderPlaylist(data) {
     html = "";
     for (let index = 0; index < data.myPlaylist.length; index++) {
         const element = data.myPlaylist[index];
-        html += `<tr data-index=${index}>
+        html += `<tr data-index=${index} data-id=${element.id}>
         <th scope="row">${element.id}</th>
         <td>${element.title}</td>
-        <td>${element.id}</td>
-        <td><span class='removeFromPlayList' id="song${element.id}">-</span> <span class='playBtn' id="song${element.id}">Play</span></td>
+        <td>${element.releaseDate}</td>
+        <td><span class='removeFromPlaylist' id="song${element.id}"><i class="bi bi-dash-circle"></i></span> <span class='playBtn' id="song${element.id}"><i class="bi bi-play-circle"></i></span></td>
         </tr>`;
     }
     document.getElementById('playlistBody').innerHTML = html;
 
     addPlayEventListeners();
+    removeFromPlaylistListeners();
 
 }
 
@@ -161,6 +199,27 @@ function addPlayEventListeners() {
             let title = row.children[1].textContent;
             currentSongIndex = parseInt(row.dataset.index, 10);
             loadSongForPlay(title);
+        });
+    });
+}
+
+
+function addToPlaylistListeners() {
+    document.querySelectorAll('.addToPlaylist').forEach(span => {
+        span.addEventListener('click', function () {
+            let row = this.closest('tr');
+            let musicId = parseInt(row.dataset.index, 10);
+            addToPlayList(musicId);
+        });
+    });
+}
+
+function removeFromPlaylistListeners() {
+    document.querySelectorAll('.removeFromPlaylist').forEach(span => {
+        span.addEventListener('click', function () {
+            let row = this.closest('tr');
+            let musicId = parseInt(row.dataset.id, 10);
+            removeFromPlaylist(musicId);
         });
     });
 }
@@ -181,10 +240,10 @@ function playNext(direction) {
     }
     else {
         console.log(playMode)
-        if (playMode == 1) {
+        if (playMode == 0) {
             currentSongIndex = currentSongIndex;
             console.log("Playing song:", myPlaylist[currentSongIndex]);
-        } else if (playMode == 2) {
+        } else if (playMode == 1) {
             if (direction == 1) {
                 currentSongIndex = (currentSongIndex + 1) % myPlaylist.length;
             }
@@ -192,7 +251,7 @@ function playNext(direction) {
                 currentSongIndex = (currentSongIndex - 1 + myPlaylist.length) % myPlaylist.length;
             }
             console.log("Playing song:", myPlaylist[currentSongIndex]);
-        } else if (playMode == 3) {
+        } else if (playMode == 2) {
             currentSongIndex = Math.floor(Math.random() * myPlaylist.length);
             console.log("Playing song:", myPlaylist[currentSongIndex]);
         } else {
@@ -228,8 +287,32 @@ function nextBtnListener() {
     });
 }
 
-function modeToggleListener() { }
+function modeToggleListener() {
+    const modeBtn = document.getElementById('modeBtn');
+    modeBtn.addEventListener('click', () => {
+        playMode = (playMode + 1) % 3;
+        if (playMode == 0) {
+            modeBtn.className = "bi bi-repeat-1";
+        }
+        if (playMode == 1) {
+            modeBtn.className = "bi bi-arrow-repeat";
+        }
+        if (playMode == 2) {
+            modeBtn.className = "bi bi-shuffle";
+        }
+    });
+
+}
 
 
+function logoutButtonListener() {
+    const logoutBtn = document.getElementById('logoutButton');
+    logoutBtn.addEventListener('click', () => {
+        if (confirm("Are you sure you want to logout?") == true) {
+            sessionStorage.removeItem('user');
+            redirectToLogin();
+        }
+    });
 
+}
 

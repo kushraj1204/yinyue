@@ -1,4 +1,4 @@
-let accessTokens = [];
+let accessTokens = [{ "username": "kush", "accessToken": "sampleAccessToken" }];
 module.exports = class LoginResponse {
     constructor(username, email, accessToken) {
         this.username = username;

@@ -18,7 +18,7 @@ access-token: sampleAccessToken
 
 ###
 
-POST http://localhost:3301/music/playlist/add
+PUT http://localhost:3303/music/3/playlist/add
 content-type: application/json
 access-token: sampleAccessToken
 
@@ -28,7 +28,7 @@ access-token: sampleAccessToken
 
 ###
 
-POST http://localhost:3301/music/playlist/remove
+PUT http://localhost:3303/music/3/playlist/remove
 content-type: application/json
 access-token: sampleAccessToken
 
