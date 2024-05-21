@@ -34,10 +34,15 @@ async function fetchMusic() {
                 }
             });
             const data = await response.json();
-            if (data.status)
-                if (!response.ok) {
+            if (!response.ok) {
+                if (response.status == 401) {
+                    sessionStorage.removeItem('user');
+                    redirectToLogin();
+                }
+                else {
                     throw data;
                 }
+            }
             if (data.status) {
                 renderSongs(data.data);
             } else {
@@ -67,10 +72,16 @@ async function fetchMyPlayList() {
                 }
             });
             const data = await response.json();
-            if (data.status)
-                if (!response.ok) {
+
+            if (!response.ok) {
+                if (response.status == 401) {
+                    sessionStorage.removeItem('user');
+                    redirectToLogin();
+                }
+                else {
                     throw data;
                 }
+            }
             if (data.status) {
                 playMode = data.data.playMode;
                 myPlaylist = data.data.myPlaylist;
@@ -102,10 +113,16 @@ async function addToPlayList(id) {
                 }
             });
             const data = await response.json();
-            if (data.status)
-                if (!response.ok) {
+
+            if (!response.ok) {
+                if (response.status == 401) {
+                    sessionStorage.removeItem('user');
+                    redirectToLogin();
+                }
+                else {
                     throw data;
                 }
+            }
             if (data.status) {
                 fetchMyPlayList();
             } else {
@@ -135,10 +152,15 @@ async function removeFromPlaylist(id) {
                 }
             });
             const data = await response.json();
-            if (data.status)
-                if (!response.ok) {
+            if (!response.ok) {
+                if (response.status == 401) {
+                    sessionStorage.removeItem('user');
+                    redirectToLogin();
+                }
+                else {
                     throw data;
                 }
+            }
             if (data.status) {
                 fetchMyPlayList();
             } else {
@@ -156,7 +178,6 @@ async function removeFromPlaylist(id) {
 
 
 function renderSongs(data) {
-    console.log("Inside render songs", data);
     html = "";
     for (let index = 0; index < data.length; index++) {
         const element = data[index];
@@ -172,7 +193,6 @@ function renderSongs(data) {
 }
 
 function renderPlaylist(data) {
-    console.log("Inside render playlist", data);
     html = "";
     for (let index = 0; index < data.myPlaylist.length; index++) {
         const element = data.myPlaylist[index];
@@ -180,7 +200,11 @@ function renderPlaylist(data) {
         <th scope="row">${element.id}</th>
         <td>${element.title}</td>
         <td>${element.releaseDate}</td>
-        <td><span class='removeFromPlaylist' id="song${element.id}"><i class="bi bi-dash-circle"></i></span> <span class='playBtn' id="song${element.id}"><i class="bi bi-play-circle"></i></span></td>
+        <td><span class='removeFromPlaylist' id="song${element.id}">
+        <i class="bi bi-dash-circle"></i></span> 
+        <span class='playBtn' id="song${element.id}">
+        <i class="bi bi-play-circle"></i></span>
+        </td>
         </tr>`;
     }
     document.getElementById('playlistBody').innerHTML = html;
@@ -239,10 +263,9 @@ function playNext(direction) {
         return;
     }
     else {
-        console.log(playMode)
+
         if (playMode == 0) {
             currentSongIndex = currentSongIndex;
-            console.log("Playing song:", myPlaylist[currentSongIndex]);
         } else if (playMode == 1) {
             if (direction == 1) {
                 currentSongIndex = (currentSongIndex + 1) % myPlaylist.length;
@@ -250,13 +273,9 @@ function playNext(direction) {
             else {
                 currentSongIndex = (currentSongIndex - 1 + myPlaylist.length) % myPlaylist.length;
             }
-            console.log("Playing song:", myPlaylist[currentSongIndex]);
         } else if (playMode == 2) {
             currentSongIndex = Math.floor(Math.random() * myPlaylist.length);
-            console.log("Playing song:", myPlaylist[currentSongIndex]);
         } else {
-            console.log(playMode)
-            console.error("Invalid playMode.Playing next in line");
             currentSongIndex = (currentSongIndex + 1) % myPlaylist.length;
         }
         loadSongForPlay(myPlaylist[currentSongIndex].title);
