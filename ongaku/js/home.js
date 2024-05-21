@@ -13,10 +13,13 @@ window.onload = function () {
     modeToggleListener();
     logoutButtonListener();
 }
+function reloadLogin(){
+    window.location.replace('/ongaku/login.html');
+}
 function redirectToLogin() {
     const user = JSON.parse(sessionStorage.getItem('user'));
     if (!user || !user.loggedIn) {
-        window.location.replace('/login.html');
+        reloadLogin();
     }
     else{
         document.getElementById('username').innerText = "Welcome "+user.username;
@@ -27,7 +30,7 @@ async function fetchMusic() {
     const user = JSON.parse(sessionStorage.getItem('user'));
     if (!user || !user.accessToken) {
         alert('User is not authenticated');
-        window.location.replace('/login.html');
+        reloadLogin();
     }
     (async () => {
         try {
@@ -65,7 +68,7 @@ async function fetchMyPlayList() {
     const user = JSON.parse(sessionStorage.getItem('user'));
     if (!user || !user.accessToken) {
         alert('User is not authenticated');
-        window.location.replace('/login.html');
+        reloadLogin();
     }
     (async () => {
         try {
@@ -106,7 +109,7 @@ async function addToPlayList(id) {
     const user = JSON.parse(sessionStorage.getItem('user'));
     if (!user || !user.accessToken) {
         alert('User is not authenticated');
-        window.location.replace('/login.html');
+        reloadLogin();
     }
     (async () => {
         try {
@@ -145,7 +148,7 @@ async function removeFromPlaylist(id) {
     const user = JSON.parse(sessionStorage.getItem('user'));
     if (!user || !user.accessToken) {
         alert('User is not authenticated');
-        window.location.replace('/login.html');
+        reloadLogin();
     }
     (async () => {
         try {

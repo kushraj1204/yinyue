@@ -42,7 +42,7 @@ function redirectToHome() {
     if (user != null) {
         console.log(user)
         if (user.loggedIn && user.accessToken != "") {
-            window.location.replace('/index.html');
+            window.location.replace('/ongaku/index.html');
         }
     }
 }
