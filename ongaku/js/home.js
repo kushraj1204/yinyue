@@ -1,4 +1,4 @@
-var playMode = 0;
+var playMode = 0;// playMode 0->PLay same song on repeat,  2->Repeat 1 song,  2->Shuffle
 var myPlaylist = [];
 var currentSongIndex = 0;
 window.onload = function () {
@@ -286,7 +286,6 @@ function playNext(direction) {
         return;
     }
     else {
-
         if (playMode == 0) {
             currentSongIndex = currentSongIndex;
         } else if (playMode == 1) {

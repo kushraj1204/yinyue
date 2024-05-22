@@ -30,6 +30,7 @@ module.exports.getMyMusic = (req, res, next) => {
         });
     }
     let playMode = myMusicChoice?.playMode ?? 1;
+    playMode=0;
 
     res.status(200).json(new responseBody({myPlaylist,playMode}));
 }
