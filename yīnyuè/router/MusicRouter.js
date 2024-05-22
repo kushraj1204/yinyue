@@ -6,7 +6,7 @@ router.get('/',musicController.getAllMusic);
 
 router.get('/playlist',musicController.getMyMusic);
 router.put('/:id/playlist/add',musicController.addToMyMusic);
-router.put('/:id/playlist/remove',musicController.removeFromMyMusic);
+router.delete('/:id/playlist/remove',musicController.removeFromMyMusic);
 
 
 module.exports=router;

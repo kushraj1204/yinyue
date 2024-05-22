@@ -3,8 +3,6 @@ var myPlaylist = [];
 var currentSongIndex = 0;
 window.onload = function () {
     redirectToLogin();
-    fetchMusic();
-    fetchMyPlayList();
     onAudioEnd();
     onAudioPlayPause();
     prevBtnListener();
@@ -13,23 +11,24 @@ window.onload = function () {
     modeToggleListener();
     logoutButtonListener();
 }
-function reloadLogin(){
-    window.location.replace('/ongaku/login.html');
+function reloadLogin() {
+    window.location.replace(clientUrlAdditive + '/login.html');
 }
 function redirectToLogin() {
     const user = JSON.parse(sessionStorage.getItem('user'));
     if (!user || !user.loggedIn) {
         reloadLogin();
     }
-    else{
-        document.getElementById('username').innerText = "Welcome "+user.username;
+    else {
+        fetchMusic();
+        fetchMyPlayList();
+        document.getElementById('username').innerText = "Welcome " + user.username;
     }
 }
 
 async function fetchMusic() {
     const user = JSON.parse(sessionStorage.getItem('user'));
-    if (!user || !user.accessToken) {
-        alert('User is not authenticated');
+    if (!user?.accessToken) {
         reloadLogin();
     }
     (async () => {
@@ -66,8 +65,7 @@ async function fetchMusic() {
 
 async function fetchMyPlayList() {
     const user = JSON.parse(sessionStorage.getItem('user'));
-    if (!user || !user.accessToken) {
-        alert('User is not authenticated');
+    if (!user?.accessToken) {
         reloadLogin();
     }
     (async () => {
@@ -94,7 +92,7 @@ async function fetchMyPlayList() {
                 playMode = data.data.playMode;
                 myPlaylist = data.data.myPlaylist;
                 renderPlaylist(data.data);
-                playNext();
+                playIfPaused();
             } else {
                 alert(data.message);
             }
@@ -107,8 +105,7 @@ async function fetchMyPlayList() {
 
 async function addToPlayList(id) {
     const user = JSON.parse(sessionStorage.getItem('user'));
-    if (!user || !user.accessToken) {
-        alert('User is not authenticated');
+    if (!user?.accessToken) {
         reloadLogin();
     }
     (async () => {
@@ -146,14 +143,13 @@ async function addToPlayList(id) {
 
 async function removeFromPlaylist(id) {
     const user = JSON.parse(sessionStorage.getItem('user'));
-    if (!user || !user.accessToken) {
-        alert('User is not authenticated');
+    if (!user?.accessToken) {
         reloadLogin();
     }
     (async () => {
         try {
             const response = await fetch(serverUrl + "/music/" + id + "/playlist/remove", {
-                method: 'PUT',
+                method: 'DELETE',
                 headers: {
                     'Content-type': 'application/json',
                     'Access-Token': user.accessToken
@@ -182,7 +178,12 @@ async function removeFromPlaylist(id) {
 }
 
 
-
+function playIfPaused() {
+    let aud = document.getElementById("audioPlayer");
+    if (aud.paused) {
+        playNext();
+    }
+}
 
 
 function renderSongs(data) {
@@ -311,7 +312,7 @@ function loadSongForPlay(title) {
     let audioElement = sourceElement.parentElement;
     audioElement.load();
     audioElement.play();
-    document.getElementById('musicTitle').innerText=title;
+    document.getElementById('musicTitle').innerText = title;
 }
 
 
